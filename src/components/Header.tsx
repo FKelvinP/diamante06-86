@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Menu, X, Calendar, Phone, User, LogOut, LogIn, UserPlus } from 'lucide-react';
+import { Menu, X, Calendar, User, LogOut, LogIn, MessageCircle } from 'lucide-react';
 import logoImage from '/lovable-uploads/b8a1249e-804e-44d2-a223-77a0b881cc40.png';
 
 const Header = () => {
@@ -61,53 +61,55 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* Contact Info & Auth */}
+          {/* Auth & WhatsApp */}
           <div className="hidden lg:flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Phone className="h-4 w-4" />
-              <span>(11) 99999-9999</span>
-            </div>
-            
-              {isAuthenticated ? (
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 text-sm">
-                    <User className="h-4 w-4 text-primary" />
-                    <span className="font-medium">{user?.name}</span>
-                    {user?.isAdmin && (
-                      <Badge variant="secondary" className="text-xs">Admin</Badge>
-                    )}
-                  </div>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-sm">
+                  <User className="h-4 w-4 text-primary" />
+                  <span className="font-medium">{user?.name}</span>
                   {user?.isAdmin && (
-                    <Link to="/dashboard">
-                      <Button variant="outline" size="sm">
-                        Dashboard
-                      </Button>
-                    </Link>
+                    <Badge variant="secondary" className="text-xs">Admin</Badge>
                   )}
-                  <Button variant="hero" size="sm" onClick={handleBookingClick}>
-                    <Calendar className="h-4 w-4" />
-                    Agendar
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={handleLogout}>
-                    <LogOut className="h-4 w-4" />
-                  </Button>
                 </div>
+                {user?.isAdmin && (
+                  <Link to="/dashboard">
+                    <Button variant="outline" size="sm">
+                      Dashboard
+                    </Button>
+                  </Link>
+                )}
+                <Button variant="hero" size="sm" onClick={handleBookingClick}>
+                  <Calendar className="h-4 w-4" />
+                  Agendar
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
             ) : (
               <div className="flex items-center gap-2">
                 <Link to="/login">
                   <Button variant="outline" size="sm">
                     <LogIn className="h-4 w-4" />
-                    Entrar
-                  </Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="hero" size="sm">
-                    <UserPlus className="h-4 w-4" />
-                    Cadastro
+                    Login
                   </Button>
                 </Link>
               </div>
             )}
+            
+            {/* WhatsApp Button */}
+            <a 
+              href="https://wa.me/5511999999999" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center"
+            >
+              <Button variant="hero" size="sm">
+                <MessageCircle className="h-4 w-4" />
+                WhatsApp
+              </Button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -137,11 +139,6 @@ const Header = () => {
               <Link to="/contact" className="text-foreground hover:text-primary transition-colors py-2">
                 Contato
               </Link>
-              
-              <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
-                <Phone className="h-4 w-4" />
-                <span>(11) 99999-9999</span>
-              </div>
               
               {isAuthenticated ? (
                 <div className="space-y-3 pt-2 border-t border-border">
@@ -173,17 +170,24 @@ const Header = () => {
                   <Link to="/login" className="block">
                     <Button variant="outline" className="w-full">
                       <LogIn className="h-4 w-4" />
-                      Entrar
-                    </Button>
-                  </Link>
-                  <Link to="/register" className="block">
-                    <Button variant="hero" className="w-full">
-                      <UserPlus className="h-4 w-4" />
-                      Cadastrar
+                      Login
                     </Button>
                   </Link>
                 </div>
               )}
+              
+              {/* WhatsApp Button Mobile */}
+              <a 
+                href="https://wa.me/5511999999999" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block pt-2"
+              >
+                <Button variant="hero" className="w-full">
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp
+                </Button>
+              </a>
             </nav>
           </div>
         )}
