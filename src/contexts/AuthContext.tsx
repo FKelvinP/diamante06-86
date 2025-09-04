@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import type { User as SupabaseUser, Session } from '@supabase/supabase-js';
 
 export interface User {
   id: string;
@@ -12,6 +12,7 @@ export interface User {
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
@@ -42,26 +43,33 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // Set up auth state listener FIRST
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
       if (session?.user) {
-        fetchUserProfile(session.user);
+        // Use setTimeout to prevent deadlock issues
+        setTimeout(() => {
+          fetchUserProfile(session.user);
+        }, 0);
       } else {
+        setUser(null);
+        setSession(null);
         setIsLoading(false);
       }
     });
 
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
       if (session?.user) {
-        await fetchUserProfile(session.user);
+        fetchUserProfile(session.user);
       } else {
-        setUser(null);
         setIsLoading(false);
       }
     });
@@ -123,10 +131,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsLoading(true);
     
     try {
+      const redirectUrl = `${window.location.origin}/`;
+      
       const { data, error } = await supabase.auth.signUp({
         email: userData.email,
         password: userData.password,
         options: {
+          emailRedirectTo: redirectUrl,
           data: {
             full_name: userData.name,
             phone: userData.phone,
@@ -163,6 +174,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider
       value={{
         user,
+        session,
         isAuthenticated: !!user,
         isLoading,
         login,
