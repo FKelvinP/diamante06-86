@@ -79,6 +79,14 @@ const Hero = () => {
               <Sparkles className="h-5 w-5" />
               Agendar Agora
             </Button>
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90"
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Ver Serviços
+            </Button>
           </div>
         </div>
       </div>
