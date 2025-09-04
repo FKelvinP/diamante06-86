@@ -79,8 +79,8 @@ const Header = () => {
                   <LogOut className="h-4 w-4" />
                 </Button>
               </div> : <div className="flex items-center gap-2">
-                <Link to="/login">
-                  <Button size="sm" className="gold-button text-base font-medium bg-slate-50">
+                <Link to="/login" className="bg-green-600 hover:bg-green-500">
+                  <Button size="sm" className="gold-button">
                     <LogIn className="h-4 w-4" />
                     Login
                   </Button>
@@ -89,7 +89,7 @@ const Header = () => {
             
             {/* WhatsApp Button */}
             <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" className="flex items-center">
-              <Button variant="hero" size="sm" className="rounded-sm text-slate-50 text-base font-medium bg-slate-50">
+              <Button variant="hero" size="sm">
                 <MessageCircle className="h-4 w-4" />
                 WhatsApp
               </Button>
