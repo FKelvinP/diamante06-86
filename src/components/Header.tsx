@@ -80,7 +80,7 @@ const Header = () => {
                 </Button>
               </div> : <div className="flex items-center gap-2">
                 <Link to="/login" className="bg-green-600 hover:bg-green-500">
-                  <Button size="sm" className="gold-button">
+                  <Button size="sm" className="gold-button rounded-none">
                     <LogIn className="h-4 w-4" />
                     Login
                   </Button>
