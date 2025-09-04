@@ -150,7 +150,7 @@ All colors MUST be HSL.
   
   /* Menu styles */
   .menu-link {
-    @apply relative font-semibold text-lg transition-all duration-300 hover:scale-105;
+    @apply relative font-bold text-lg transition-all duration-300 hover:scale-105;
     background: var(--gradient-menu);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

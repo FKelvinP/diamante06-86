@@ -30,9 +30,9 @@ const Hero = () => {
       <div className="relative z-10 container mx-auto px-4 py-20">
         <div className="max-w-2xl">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-sm border border-primary-foreground/20 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-primary backdrop-blur-sm border border-primary-foreground/20 rounded-full px-4 py-2 mb-6">
             <Sparkles className="h-4 w-4 text-primary-foreground" />
-            <span className="text-sm text-primary-foreground font-medium">
+            <span className="text-sm text-primary-foreground font-medium premium-text">
               Profissionais em Estética Automotiva
             </span>
           </div>
@@ -40,7 +40,7 @@ const Hero = () => {
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 leading-tight">
             Brilho de{' '}
-            <span className="bg-gradient-to-r from-primary-glow to-diamond-light bg-clip-text text-transparent">
+            <span className="premium-text">
               Diamante
             </span>{' '}
             para seu carro
@@ -54,17 +54,17 @@ const Hero = () => {
 
           {/* Benefits */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="flex items-center gap-3 bg-background/10 backdrop-blur-sm rounded-lg p-3">
-              <Shield className="h-5 w-5 text-primary-glow" />
-              <span className="text-sm text-primary-foreground">Produtos Premium</span>
+            <div className="flex items-center gap-3 bg-primary backdrop-blur-sm rounded-lg p-3">
+              <Shield className="h-5 w-5 text-primary-foreground" />
+              <span className="text-sm text-primary-foreground font-medium">Produtos Premium</span>
             </div>
-            <div className="flex items-center gap-3 bg-background/10 backdrop-blur-sm rounded-lg p-3">
-              <Clock className="h-5 w-5 text-primary-glow" />
-              <span className="text-sm text-primary-foreground">Serviço Rápido</span>
+            <div className="flex items-center gap-3 bg-primary backdrop-blur-sm rounded-lg p-3">
+              <Clock className="h-5 w-5 text-primary-foreground" />
+              <span className="text-sm text-primary-foreground font-medium">Serviço Rápido</span>
             </div>
-            <div className="flex items-center gap-3 bg-background/10 backdrop-blur-sm rounded-lg p-3">
-              <Star className="h-5 w-5 text-primary-glow" />
-              <span className="text-sm text-primary-foreground">Resultado Garantido</span>
+            <div className="flex items-center gap-3 bg-primary backdrop-blur-sm rounded-lg p-3">
+              <Star className="h-5 w-5 text-primary-foreground" />
+              <span className="text-sm text-primary-foreground font-medium">Resultado Garantido</span>
             </div>
           </div>
 
@@ -78,14 +78,6 @@ const Hero = () => {
             >
               <Sparkles className="h-5 w-5" />
               Agendar Agora
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-lg px-8 py-6 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Ver Serviços
             </Button>
           </div>
         </div>
