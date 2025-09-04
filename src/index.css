@@ -54,6 +54,10 @@ All colors MUST be HSL.
     --lava-jato-blue: 213 87% 45%;
     --lava-jato-red: 0 84% 60%;
     --premium-gold: 45 100% 55%;
+    
+    /* Menu gradients */
+    --gradient-menu: linear-gradient(135deg, hsl(var(--lava-jato-blue)), hsl(var(--lava-jato-red)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--premium-gold)), hsl(45 95% 65%));
 
     --radius: 0.5rem;
 
@@ -142,5 +146,42 @@ All colors MUST be HSL.
     color: hsl(var(--premium-gold));
     font-weight: bold;
     text-shadow: 0 0 10px hsl(var(--premium-gold) / 0.3);
+  }
+  
+  /* Menu styles */
+  .menu-link {
+    @apply relative font-semibold text-lg transition-all duration-300 hover:scale-105;
+    background: var(--gradient-menu);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+  }
+  
+  .menu-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--gradient-menu);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+  
+  .menu-link:hover::after {
+    width: 100%;
+  }
+  
+  .gold-button {
+    @apply font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl;
+    background: var(--gradient-gold);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  
+  .gold-button:hover {
+    box-shadow: 0 0 20px hsl(var(--premium-gold) / 0.4);
   }
 }

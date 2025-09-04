@@ -46,17 +46,17 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors">
+          <nav className="hidden md:flex items-center gap-8">
+            <a href="#home" className="menu-link">
               Início
             </a>
-            <a href="#services" className="text-foreground hover:text-primary transition-colors">
+            <a href="#services" className="menu-link">
               Serviços
             </a>
-            <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/about" className="menu-link">
               Sobre Nós
             </Link>
-            <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/contact" className="menu-link">
               Contato
             </Link>
           </nav>
@@ -90,7 +90,7 @@ const Header = () => {
             ) : (
               <div className="flex items-center gap-2">
                 <Link to="/login">
-                  <Button variant="outline" size="sm">
+                  <Button size="sm" className="gold-button">
                     <LogIn className="h-4 w-4" />
                     Login
                   </Button>
@@ -127,16 +127,16 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-border pt-4">
             <nav className="flex flex-col gap-4">
-              <a href="#home" className="text-foreground hover:text-primary transition-colors py-2">
+              <a href="#home" className="menu-link py-2">
                 Início
               </a>
-              <a href="#services" className="text-foreground hover:text-primary transition-colors py-2">
+              <a href="#services" className="menu-link py-2">
                 Serviços
               </a>
-              <Link to="/about" className="text-foreground hover:text-primary transition-colors py-2">
+              <Link to="/about" className="menu-link py-2">
                 Sobre Nós
               </Link>
-              <Link to="/contact" className="text-foreground hover:text-primary transition-colors py-2">
+              <Link to="/contact" className="menu-link py-2">
                 Contato
               </Link>
               
@@ -168,7 +168,7 @@ const Header = () => {
               ) : (
                 <div className="space-y-2 pt-2 border-t border-border">
                   <Link to="/login" className="block">
-                    <Button variant="outline" className="w-full">
+                    <Button className="w-full gold-button">
                       <LogIn className="h-4 w-4" />
                       Login
                     </Button>
