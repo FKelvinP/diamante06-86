@@ -1,28 +1,37 @@
 import { Button } from '@/components/ui/button';
 import { Sparkles, Shield, Clock, Star } from 'lucide-react';
 import heroBackground from '@/assets/hero-background.jpg';
-
 const Hero = () => {
-  return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+  return <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background Animado */}
       <div className="absolute inset-0">
         {/* Fundo base com imagem */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroBackground})` }}
-        />
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+        backgroundImage: `url(${heroBackground})`
+      }} />
         
         {/* Overlays animados que se movem */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/50 to-primary/80 animate-pulse"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary-glow/30 to-transparent animate-bounce" style={{ animationDuration: '3s' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary-glow/30 to-transparent animate-bounce" style={{
+        animationDuration: '3s'
+      }}></div>
         
         {/* Elementos flutuantes que se movem */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 right-10 w-20 h-20 bg-primary-glow/30 rounded-full blur-xl animate-ping" style={{ animationDuration: '2s' }}></div>
-          <div className="absolute bottom-32 left-20 w-16 h-16 bg-diamond-light/25 rounded-full blur-lg animate-bounce" style={{ animationDelay: '1s', animationDuration: '2.5s' }}></div>
-          <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-primary-foreground/20 rounded-full blur animate-pulse opacity-60" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-1/3 left-1/3 w-8 h-8 bg-primary-glow/40 rounded-full animate-ping" style={{ animationDelay: '0.5s', animationDuration: '1.8s' }}></div>
+          <div className="absolute top-20 right-10 w-20 h-20 bg-primary-glow/30 rounded-full blur-xl animate-ping" style={{
+          animationDuration: '2s'
+        }}></div>
+          <div className="absolute bottom-32 left-20 w-16 h-16 bg-diamond-light/25 rounded-full blur-lg animate-bounce" style={{
+          animationDelay: '1s',
+          animationDuration: '2.5s'
+        }}></div>
+          <div className="absolute top-1/2 right-1/4 w-12 h-12 bg-primary-foreground/20 rounded-full blur animate-pulse opacity-60" style={{
+          animationDelay: '2s'
+        }}></div>
+          <div className="absolute top-1/3 left-1/3 w-8 h-8 bg-primary-glow/40 rounded-full animate-ping" style={{
+          animationDelay: '0.5s',
+          animationDuration: '1.8s'
+        }}></div>
         </div>
       </div>
 
@@ -32,7 +41,7 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-primary backdrop-blur-sm border border-primary-foreground/20 rounded-full px-4 py-2 mb-6">
             <Sparkles className="h-4 w-4 text-primary-foreground" />
-            <span className="text-sm text-primary-foreground font-medium premium-text">
+            <span className="premium-text font-semibold text-[f6c00c] text-[#f8c10d]">
               Profissionais em Estética Automotiva
             </span>
           </div>
@@ -47,7 +56,7 @@ const Hero = () => {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 leading-relaxed">
+          <p className="text-lg mb-8 leading-relaxed md:text-xl font-normal text-[#f6c00c]">
             Transformamos seu veículo com serviços profissionais de lavagem e estética automotiva. 
             Qualidade premium e resultados que impressionam.
           </p>
@@ -70,21 +79,15 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button 
-              variant="hero" 
-              size="lg" 
-              className="text-lg px-8 py-6 bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-              onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-            >
+            <Button variant="hero" size="lg" className="text-lg px-8 py-6 bg-primary-foreground text-primary hover:bg-primary-foreground/90" onClick={() => document.getElementById('booking')?.scrollIntoView({
+            behavior: 'smooth'
+          })}>
               <Sparkles className="h-5 w-5" />
               Agendar Agora
             </Button>
-            <Button 
-              variant="hero" 
-              size="lg" 
-              className="text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90"
-              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            >
+            <Button variant="hero" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({
+            behavior: 'smooth'
+          })} className="text-lg px-8 py-6 text-primary-foreground bg-[#f6c00c]">
               Ver Serviços
             </Button>
           </div>
@@ -97,8 +100,6 @@ const Hero = () => {
           <Sparkles className="h-8 w-8 text-primary-glow" />
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;

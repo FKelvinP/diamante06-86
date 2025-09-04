@@ -1,55 +1,45 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock,
-  Navigation,
-  MessageCircle
-} from 'lucide-react';
-
-const contactInfo = [
-  {
-    icon: MapPin,
-    title: 'Endereço',
-    primary: 'Rua das Flores, 123',
-    secondary: 'Centro - São Paulo/SP',
-    action: 'Ver no Mapa',
-    href: 'https://maps.google.com'
-  },
-  {
-    icon: Phone,
-    title: 'Telefone',
-    primary: '(11) 99999-9999',
-    secondary: 'WhatsApp disponível',
-    action: 'Ligar Agora',
-    href: 'tel:+5511999999999'
-  },
-  {
-    icon: Mail,
-    title: 'E-mail',
-    primary: 'contato@diamantelava.com.br',
-    secondary: 'Resposta em até 2h',
-    action: 'Enviar E-mail',
-    href: 'mailto:contato@diamantelava.com.br'
-  }
-];
-
-const workingHours = [
-  { day: 'Segunda a Sexta', hours: '08:00 - 18:00' },
-  { day: 'Sábado', hours: '08:00 - 17:00' },
-  { day: 'Domingo', hours: '08:00 - 12:00' }
-];
-
+import { MapPin, Phone, Mail, Clock, Navigation, MessageCircle } from 'lucide-react';
+const contactInfo = [{
+  icon: MapPin,
+  title: 'Endereço',
+  primary: 'Rua das Flores, 123',
+  secondary: 'Centro - São Paulo/SP',
+  action: 'Ver no Mapa',
+  href: 'https://maps.google.com'
+}, {
+  icon: Phone,
+  title: 'Telefone',
+  primary: '(11) 99999-9999',
+  secondary: 'WhatsApp disponível',
+  action: 'Ligar Agora',
+  href: 'tel:+5511999999999'
+}, {
+  icon: Mail,
+  title: 'E-mail',
+  primary: 'contato@diamantelava.com.br',
+  secondary: 'Resposta em até 2h',
+  action: 'Enviar E-mail',
+  href: 'mailto:contato@diamantelava.com.br'
+}];
+const workingHours = [{
+  day: 'Segunda a Sexta',
+  hours: '08:00 - 18:00'
+}, {
+  day: 'Sábado',
+  hours: '08:00 - 17:00'
+}, {
+  day: 'Domingo',
+  hours: '08:00 - 12:00'
+}];
 const Contact = () => {
-  return (
-    <section id="contact" className="py-20 bg-background">
+  return <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4">
+          <Badge variant="outline" className="mb-4 bg-[#4aa5e6]">
             Contato
           </Badge>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
@@ -70,36 +60,29 @@ const Contact = () => {
           <div className="lg:col-span-2">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {contactInfo.map((info, index) => {
-                const IconComponent = info.icon;
-                return (
-                  <Card key={index} className="text-center p-6 hover:shadow-card transition-all duration-300">
-                    <CardContent className="p-0">
+              const IconComponent = info.icon;
+              return <Card key={index} className="text-center p-6 hover:shadow-card transition-all duration-300">
+                    <CardContent className="p-0 bg-transparent">
                       <div className="mb-4 mx-auto w-fit p-3 bg-gradient-primary rounded-full">
                         <IconComponent className="h-6 w-6 text-primary-foreground" />
                       </div>
                       <h3 className="font-bold text-foreground mb-2">{info.title}</h3>
                       <p className="text-foreground font-medium mb-1">{info.primary}</p>
                       <p className="text-sm text-muted-foreground mb-4">{info.secondary}</p>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        asChild
-                        className="hover:bg-primary hover:text-primary-foreground"
-                      >
+                      <Button variant="outline" size="sm" asChild className="hover:bg-primary hover:text-primary-foreground">
                         <a href={info.href} target="_blank" rel="noopener noreferrer">
                           {info.action}
                         </a>
                       </Button>
                     </CardContent>
-                  </Card>
-                );
-              })}
+                  </Card>;
+            })}
             </div>
 
             {/* Map Section */}
             <Card className="overflow-hidden">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-[#0c72c6]/[0.96]">
                   <Navigation className="h-5 w-5" />
                   Nossa Localização
                 </CardTitle>
@@ -112,11 +95,7 @@ const Contact = () => {
                     <p className="text-sm opacity-90 mb-4">
                       Rua das Flores, 123 - Centro, São Paulo/SP
                     </p>
-                    <Button 
-                      variant="outline" 
-                      className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-                      asChild
-                    >
+                    <Button variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
                       <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
                         <Navigation className="h-4 w-4 mr-2" />
                         Abrir no Google Maps
@@ -139,12 +118,10 @@ const Contact = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {workingHours.map((schedule, index) => (
-                  <div key={index} className="flex justify-between items-center py-2 border-b border-border last:border-0">
+                {workingHours.map((schedule, index) => <div key={index} className="flex justify-between items-center py-2 border-b border-border last:border-0">
                     <span className="text-muted-foreground">{schedule.day}</span>
                     <span className="font-medium text-primary">{schedule.hours}</span>
-                  </div>
-                ))}
+                  </div>)}
                 <div className="mt-4 p-3 bg-secondary/50 rounded-lg">
                   <p className="text-sm text-muted-foreground">
                     <strong>Atenção:</strong> Recomendamos agendamento prévio para garantir seu horário.
@@ -166,15 +143,8 @@ const Contact = () => {
                   Precisa de atendimento imediato? Entre em contato conosco pelo WhatsApp 
                   e receba resposta em poucos minutos.
                 </p>
-                <Button 
-                  className="w-full bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-                  asChild
-                >
-                  <a 
-                    href="https://wa.me/5511999999999" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
+                <Button className="w-full bg-primary-foreground text-primary hover:bg-primary-foreground/90" asChild>
+                  <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="h-4 w-4 mr-2" />
                     Conversar no WhatsApp
                   </a>
@@ -211,8 +181,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Contact;

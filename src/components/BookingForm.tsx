@@ -12,33 +12,43 @@ import { Calendar, Clock, User, Phone, Mail, MessageSquare, CheckCircle, Shield,
 import { toast } from '@/hooks/use-toast';
 import { useSecureForm } from '@/hooks/useSecureForm';
 import { formatPhoneNumber, type BookingFormData } from '@/lib/validation';
-
-const services = [
-  { id: 'lavagem-simples', name: 'Lavagem Simples', price: 25, duration: '30 min' },
-  { id: 'lavagem-completa', name: 'Lavagem Completa', price: 45, duration: '60 min' },
-  { id: 'enceramento', name: 'Enceramento Premium', price: 80, duration: '90 min' },
-  { id: 'detalhamento', name: 'Detalhamento Completo', price: 150, duration: '180 min' },
-];
-
-const timeSlots = [
-  '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
-  '11:00', '11:30', '14:00', '14:30', '15:00', '15:30',
-  '16:00', '16:30', '17:00', '17:30'
-];
-
+const services = [{
+  id: 'lavagem-simples',
+  name: 'Lavagem Simples',
+  price: 25,
+  duration: '30 min'
+}, {
+  id: 'lavagem-completa',
+  name: 'Lavagem Completa',
+  price: 45,
+  duration: '60 min'
+}, {
+  id: 'enceramento',
+  name: 'Enceramento Premium',
+  price: 80,
+  duration: '90 min'
+}, {
+  id: 'detalhamento',
+  name: 'Detalhamento Completo',
+  price: 150,
+  duration: '180 min'
+}];
+const timeSlots = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
 const BookingForm = () => {
-  const { user, isAuthenticated } = useAuth();
+  const {
+    user,
+    isAuthenticated
+  } = useAuth();
   const [formData, setFormData] = useState({
     serviceId: '',
     appointmentDate: '',
     appointmentTime: '',
-    paymentOption: '100', // 50 ou 100 (percentage)
+    paymentOption: '100',
+    // 50 ou 100 (percentage)
     notes: ''
   });
-
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmedData, setConfirmedData] = useState<any>(null);
-
   const {
     errors,
     isSubmitting,
@@ -49,11 +59,9 @@ const BookingForm = () => {
     submitForm,
     getFieldError
   } = useSecureForm({
-    onSuccess: (validatedData) => {
+    onSuccess: validatedData => {
       const selectedService = services.find(s => s.id === validatedData.serviceId);
-      const paymentAmount = selectedService ? 
-        (validatedData.paymentOption === '50' ? selectedService.price * 0.5 : selectedService.price) : 0;
-
+      const paymentAmount = selectedService ? validatedData.paymentOption === '50' ? selectedService.price * 0.5 : selectedService.price : 0;
       setConfirmedData({
         ...validatedData,
         customerName: user?.name,
@@ -62,62 +70,54 @@ const BookingForm = () => {
         paymentAmount
       });
       setShowConfirmation(true);
-      
       toast({
         title: "Agendamento realizado!",
-        description: "Seu agendamento foi confirmado. Realize o pagamento para garantir sua vaga.",
+        description: "Seu agendamento foi confirmado. Realize o pagamento para garantir sua vaga."
       });
     },
-    onError: (error) => {
+    onError: error => {
       console.error('Booking submission error:', error);
     }
   });
-
   const selectedService = services.find(s => s.id === formData.serviceId);
-  const paymentAmount = selectedService && formData.paymentOption ? 
-    (formData.paymentOption === '50' ? selectedService.price * 0.5 : selectedService.price) : 0;
+  const paymentAmount = selectedService && formData.paymentOption ? formData.paymentOption === '50' ? selectedService.price * 0.5 : selectedService.price : 0;
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return (
-      <section id="booking" className="py-20 bg-background">
+    return <section id="booking" className="py-20 bg-background">
         <div className="container mx-auto px-4 text-center">
           <Card className="max-w-md mx-auto">
             <CardHeader>
-              <CardTitle className="flex items-center justify-center gap-2">
-                <Shield className="h-6 w-6 text-primary" />
+              <CardTitle className="flex items-center justify-center gap-2 text-[f6c00c] text-[#f8c20d]/[0.96]">
+                <Shield className="h-6 w-6 text-primary bg-transparent" />
                 Login Necessário
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
+              <p className="font-medium text-[#215fa2]/[0.96]">
                 Para agendar nossos serviços, você precisa estar logado em sua conta.
               </p>
               <div className="flex gap-2">
-                <Button variant="outline" className="flex-1" onClick={() => window.location.href = '/login'}>
+                <Button variant="outline" onClick={() => window.location.href = '/login'} className="flex-1 text-blue-700 bg-[f6c00c] font-bold bg-[#aa860d]">
                   Fazer Login
                 </Button>
-                <Button variant="hero" className="flex-1" onClick={() => window.location.href = '/register'}>
+                <Button variant="hero" onClick={() => window.location.href = '/register'} className="flex-1 text-[f6c00c] font-bold text-[#eabb15]/[0.92]">
                   Criar Conta
                 </Button>
               </div>
             </CardContent>
           </Card>
         </div>
-      </section>
-    );
+      </section>;
   }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     const submitData = {
       ...formData,
       customerName: user?.name || '',
       customerEmail: user?.email || '',
       customerPhone: user?.phone || ''
     };
-    
     await submitForm(submitData, async (validatedData: any) => {
       // TODO: Integrate with backend API
       console.log('Secure booking submission:', {
@@ -125,27 +125,25 @@ const BookingForm = () => {
         userId: user?.id,
         paymentAmount,
         timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent.substring(0, 100),
+        userAgent: navigator.userAgent.substring(0, 100)
       });
-      
       await new Promise(resolve => setTimeout(resolve, 2000));
     });
   };
-
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+
     // Real-time validation for better UX
     if (value.trim()) {
       validateField(field, value);
     }
   };
-
   if (showConfirmation && confirmedData) {
     const confirmedService = services.find(s => s.id === confirmedData.serviceId);
-    
-    return (
-      <section id="booking" className="py-20 bg-background">
+    return <section id="booking" className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <Card className="text-center">
@@ -209,33 +207,26 @@ const BookingForm = () => {
                     </div>
                   </div>
 
-                <Button 
-                  variant="hero" 
-                  className="w-full mt-6"
-                  onClick={() => {
-                    setShowConfirmation(false);
-                    setConfirmedData(null);
-                    setFormData({
-                      serviceId: '',
-                      appointmentDate: '',
-                      appointmentTime: '',
-                      paymentOption: '100',
-                      notes: ''
-                    });
-                  }}
-                >
+                <Button variant="hero" className="w-full mt-6" onClick={() => {
+                setShowConfirmation(false);
+                setConfirmedData(null);
+                setFormData({
+                  serviceId: '',
+                  appointmentDate: '',
+                  appointmentTime: '',
+                  paymentOption: '100',
+                  notes: ''
+                });
+              }}>
                   Fazer Novo Agendamento
                 </Button>
               </CardContent>
             </Card>
           </div>
         </div>
-      </section>
-    );
+      </section>;
   }
-
-  return (
-    <section id="booking" className="py-20 bg-background">
+  return <section id="booking" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 flex items-center gap-2 w-fit mx-auto">
@@ -253,16 +244,14 @@ const BookingForm = () => {
             Processo rápido e seguro com validação em tempo real.
           </p>
           
-          {isRateLimited && (
-            <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg max-w-md mx-auto">
+          {isRateLimited && <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg max-w-md mx-auto">
               <div className="flex items-center gap-2 text-destructive">
                 <AlertTriangle className="h-5 w-5" />
                 <span className="font-medium">
                   Muitas tentativas. Aguarde {retryAfter}s para tentar novamente.
                 </span>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
 
         <div className="max-w-4xl mx-auto">
@@ -296,20 +285,10 @@ const BookingForm = () => {
 
                 <div>
                   <Label htmlFor="notes">Observações</Label>
-                  <Textarea
-                    id="notes"
-                    value={formData.notes}
-                    onChange={(e) => handleInputChange('notes', e.target.value)}
-                    placeholder="Alguma observação especial sobre seu veículo?"
-                    rows={3}
-                    maxLength={500}
-                    className={getFieldError('notes') ? 'border-destructive' : ''}
-                  />
+                  <Textarea id="notes" value={formData.notes} onChange={e => handleInputChange('notes', e.target.value)} placeholder="Alguma observação especial sobre seu veículo?" rows={3} maxLength={500} className={getFieldError('notes') ? 'border-destructive' : ''} />
                   <div className="flex justify-between items-center mt-1">
                     <div>
-                      {getFieldError('notes') && (
-                        <p className="text-sm text-destructive">{getFieldError('notes')}</p>
-                      )}
+                      {getFieldError('notes') && <p className="text-sm text-destructive">{getFieldError('notes')}</p>}
                     </div>
                     <p className="text-xs text-muted-foreground">
                       {formData.notes.length}/500 caracteres
@@ -333,26 +312,21 @@ const BookingForm = () => {
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="serviceId">Serviço Desejado *</Label>
-                  <Select value={formData.serviceId} onValueChange={(value) => handleInputChange('serviceId', value)} required>
+                  <Select value={formData.serviceId} onValueChange={value => handleInputChange('serviceId', value)} required>
                     <SelectTrigger className={getFieldError('serviceId') ? 'border-destructive' : ''}>
                       <SelectValue placeholder="Selecione um serviço" />
                     </SelectTrigger>
                     <SelectContent>
-                      {services.map((service) => (
-                        <SelectItem key={service.id} value={service.id}>
+                      {services.map(service => <SelectItem key={service.id} value={service.id}>
                           <div className="flex items-center justify-between w-full">
                             <span>{service.name}</span>
                             <span className="ml-4 text-primary font-medium">R$ {service.price},00</span>
                           </div>
-                        </SelectItem>
-                      ))}
+                        </SelectItem>)}
                     </SelectContent>
                   </Select>
-                  {getFieldError('serviceId') && (
-                    <p className="text-sm text-destructive mt-1">{getFieldError('serviceId')}</p>
-                  )}
-                  {selectedService && (
-                    <div className="mt-2 p-3 bg-secondary/50 rounded-lg">
+                  {getFieldError('serviceId') && <p className="text-sm text-destructive mt-1">{getFieldError('serviceId')}</p>}
+                  {selectedService && <div className="mt-2 p-3 bg-secondary/50 rounded-lg">
                       <div className="flex items-center justify-between text-sm">
                         <span className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
@@ -362,22 +336,16 @@ const BookingForm = () => {
                           R$ {selectedService.price},00
                         </span>
                       </div>
-                    </div>
-                  )}
+                    </div>}
                 </div>
 
                 {/* Payment Option */}
-                {selectedService && (
-                  <div>
+                {selectedService && <div>
                     <Label className="flex items-center gap-2 mb-3">
                       <CreditCard className="h-4 w-4" />
                       Opção de Pagamento *
                     </Label>
-                    <RadioGroup
-                      value={formData.paymentOption}
-                      onValueChange={(value) => handleInputChange('paymentOption', value)}
-                      className="grid grid-cols-1 gap-3"
-                    >
+                    <RadioGroup value={formData.paymentOption} onValueChange={value => handleInputChange('paymentOption', value)} className="grid grid-cols-1 gap-3">
                       <div className="flex items-center space-x-3 p-3 border rounded-lg hover:bg-secondary/30 transition-colors">
                         <RadioGroupItem value="50" id="payment-50" />
                         <Label htmlFor="payment-50" className="flex-1 cursor-pointer">
@@ -403,96 +371,63 @@ const BookingForm = () => {
                         </Label>
                       </div>
                     </RadioGroup>
-                    {paymentAmount > 0 && (
-                      <div className="mt-3 p-3 bg-primary/10 rounded-lg">
+                    {paymentAmount > 0 && <div className="mt-3 p-3 bg-primary/10 rounded-lg">
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium">Valor a pagar via Pix:</span>
                           <span className="text-lg font-bold text-primary">R$ {paymentAmount.toFixed(2)}</span>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                )}
+                      </div>}
+                  </div>}
 
                 <div>
                   <Label htmlFor="appointmentDate">Data *</Label>
-                  <Input
-                    id="appointmentDate"
-                    required
-                    type="date"
-                    value={formData.appointmentDate}
-                    onChange={(e) => handleInputChange('appointmentDate', e.target.value)}
-                    min={new Date().toISOString().split('T')[0]}
-                    max={(() => {
-                      const maxDate = new Date();
-                      maxDate.setMonth(maxDate.getMonth() + 6);
-                      return maxDate.toISOString().split('T')[0];
-                    })()}
-                    className={getFieldError('appointmentDate') ? 'border-destructive' : ''}
-                  />
-                  {getFieldError('appointmentDate') && (
-                    <p className="text-sm text-destructive mt-1">{getFieldError('appointmentDate')}</p>
-                  )}
+                  <Input id="appointmentDate" required type="date" value={formData.appointmentDate} onChange={e => handleInputChange('appointmentDate', e.target.value)} min={new Date().toISOString().split('T')[0]} max={(() => {
+                  const maxDate = new Date();
+                  maxDate.setMonth(maxDate.getMonth() + 6);
+                  return maxDate.toISOString().split('T')[0];
+                })()} className={getFieldError('appointmentDate') ? 'border-destructive' : ''} />
+                  {getFieldError('appointmentDate') && <p className="text-sm text-destructive mt-1">{getFieldError('appointmentDate')}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="appointmentTime">Horário *</Label>
-                  <Select value={formData.appointmentTime} onValueChange={(value) => handleInputChange('appointmentTime', value)} required>
+                  <Select value={formData.appointmentTime} onValueChange={value => handleInputChange('appointmentTime', value)} required>
                     <SelectTrigger className={getFieldError('appointmentTime') ? 'border-destructive' : ''}>
                       <SelectValue placeholder="Selecione um horário" />
                     </SelectTrigger>
                     <SelectContent>
-                      {timeSlots.map((time) => (
-                        <SelectItem key={time} value={time}>
+                      {timeSlots.map(time => <SelectItem key={time} value={time}>
                           {time}
-                        </SelectItem>
-                      ))}
+                        </SelectItem>)}
                     </SelectContent>
                   </Select>
-                  {getFieldError('appointmentTime') && (
-                    <p className="text-sm text-destructive mt-1">{getFieldError('appointmentTime')}</p>
-                  )}
+                  {getFieldError('appointmentTime') && <p className="text-sm text-destructive mt-1">{getFieldError('appointmentTime')}</p>}
                 </div>
 
-                <Button 
-                  type="submit" 
-                  variant="hero" 
-                  className="w-full mt-6" 
-                  disabled={isSubmitting || isRateLimited || hasErrors || !formData.serviceId}
-                >
-                  {isSubmitting ? (
-                    <>
+                <Button type="submit" variant="hero" className="w-full mt-6" disabled={isSubmitting || isRateLimited || hasErrors || !formData.serviceId}>
+                  {isSubmitting ? <>
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground"></div>
                       Validando dados...
-                    </>
-                  ) : isRateLimited ? (
-                    <>
+                    </> : isRateLimited ? <>
                       <AlertTriangle className="h-4 w-4" />
                       Aguarde {retryAfter}s
-                    </>
-                  ) : (
-                    <>
+                    </> : <>
                       <Shield className="h-4 w-4" />
                       Confirmar Agendamento Seguro
-                    </>
-                  )}
+                    </>}
                 </Button>
                 
-                {hasErrors && (
-                  <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                {hasErrors && <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
                     <div className="flex items-center gap-2 text-destructive text-sm">
                       <AlertTriangle className="h-4 w-4" />
                       <span>Por favor, corrija os erros acima antes de continuar.</span>
                     </div>
-                  </div>
-                )}
+                  </div>}
               </CardContent>
             </Card>
           </form>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default BookingForm;
